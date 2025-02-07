@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:farma_app_v2/usuario.dart';
 
-const BASE_URL = "https://farma-server-temporary.onrender.com";
+// const BASE_URL = "https://farma-server-temporary.onrender.com";
+const BASE_URL = "http://192.168.235.44:3000";
 const URL_PRODUTO = "$BASE_URL/product";
 const URL_COMENTARIO = "$BASE_URL/comment";
 const URL_IMAGEM = "$BASE_URL/public/img";
