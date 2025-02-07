@@ -17,7 +17,7 @@ class Produtos extends StatefulWidget {
   }
 }
 
-const int TAMANHO_DA_PAGINA = 4;
+const int TAMANHO_DA_PAGINA = 20;
 
 class _EstadoProdutos extends State<Produtos> {
   List<dynamic> _produtos = [];
