@@ -5,7 +5,7 @@ import 'package:farma_app_v2/apis/api.dart';
 import 'package:farma_app_v2/autenticador.dart';
 import 'package:farma_app_v2/componentes/produtocard.dart';
 import 'package:farma_app_v2/estado.dart';
-import 'package:farma_app_v2/usuario.dart';
+// import 'package:farma_app_v2/usuario.dart';
 import 'package:toast/toast.dart';
 
 class Produtos extends StatefulWidget {
@@ -28,7 +28,6 @@ class _EstadoProdutos extends State<Produtos> {
   late DragStartDetails startVerticalDragDetails;
   late DragUpdateDetails updateVerticalDragDetails;
 
-  // ignore: unused_field
   String _filtro = "";
 
   late ServicoProdutos _servicoProdutos;
@@ -58,17 +57,30 @@ class _EstadoProdutos extends State<Produtos> {
   }
 
   void _carregarProdutos() {
-    _servicoProdutos
-        .getProdutos(_ultimoProduto, TAMANHO_DA_PAGINA)
-        .then((produtos) {
-      setState(() {
-        if (produtos.isNotEmpty) {
-          _ultimoProduto = produtos.last["id"];
-        }
-
-        _produtos.addAll(produtos);
+    if (_filtro.isEmpty) {
+      _servicoProdutos
+          .getProdutos(_ultimoProduto, TAMANHO_DA_PAGINA)
+          .then((produtos) {
+        setState(() {
+          if (produtos.isNotEmpty) {
+            _ultimoProduto = produtos.last["id"];
+            print(_ultimoProduto);
+          }
+          _produtos.addAll(produtos);
+        });
       });
-    });
+    } else {
+      _servicoProdutos
+          .findProdutos(_ultimoProduto, TAMANHO_DA_PAGINA, _filtro)
+          .then((produtos) {
+        setState(() {
+          if (produtos.isNotEmpty) {
+            _ultimoProduto = produtos.last["id"];
+          }
+          _produtos.addAll(produtos);
+        });
+      });
+    }
   }
 
   Future<void> _atualizarProdutos() async {
@@ -82,8 +94,11 @@ class _EstadoProdutos extends State<Produtos> {
   }
 
   void _aplicarFiltro(String filtro) {
-    _filtro = filtro;
-
+    setState(() {
+      _filtro = filtro;
+      _produtos = [];
+      _ultimoProduto = 0;
+    });
     _carregarProdutos();
   }
 
