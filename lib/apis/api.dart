@@ -44,15 +44,9 @@ class ServicoComentarios {
     final uri = Uri.parse(
         "$URL_COMENTARIO?page=$ultimoId&limit=$tamanhoPagina&productId=$idProduto");
 
-    print(uri);
-
     final resposta = await http.get(uri);
 
-    print("\n\nID PRODUTO: $idProduto\n\n");
-
     final comentarios = jsonDecode(resposta.body);
-
-    print("\n\nCOMENTÁRIOS: $comentarios\n\n");
 
     return comentarios;
   }
